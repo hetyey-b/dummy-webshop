@@ -8,7 +8,7 @@ export default function Product({name, description, price, discount, imageUrl}: 
     return (
         <div className="bg-white inline-block relative p-5 border-solid border-[#dbdbdb] border rounded-lg w-full h-[320px]">
             <div className="bg-[#6100FF] text-white text-sm font-bold rounded-full py-1 px-3 absolute right-3 top-3">-{discount.toFixed(2)}%</div>
-            <img src={imageUrl} alt={name} className="w-[280px] h-[150px] object-cover"/>
+            <img src={imageUrl} alt={`image: ${name}`} className="w-[280px] h-[150px] object-cover"/>
             <div className="font-bold flex justify-between w-full text-xl truncate">
                 <span>{name}</span>
                 <span>{price} $</span>

@@ -1,28 +1,62 @@
 'use client'
 
-import { useCallback, useState } from "react";
-import useProductFetch from "../hooks/useProductFetch";
+import { useEffect, useState } from "react";
 import Product from "./product";
-import { Product as ProductType } from "../types/productApiTypes";
+import { ApiResponse, Product as ProductType } from "../types/productApiTypes";
+import InfiniteScroll from "react-infinite-scroll-component";
+import axios from "axios";
 
 export default function ProductList() {
-    const [query,setQuery] = useState<string>("");
     const [page,setPage] = useState<number>(0);
-    const {loading,error,list} = useProductFetch(query,page);
+    const [dataLength, setDataLength] = useState<number>(10);
+    const [list, setList] = useState<ProductType[]>([]);
+
+    const fetchData = () => {
+        setPage(page + 10);
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const url = `https://dummyjson.com/products?limit=10&skip=${page}`;
+            axios.get<ApiResponse>(url)
+            .then((res) => {
+                setList((prevState: ProductType[]) => {
+                        return [...prevState, ...res.data.products];
+                        });
+                setDataLength(res.data.total);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        }
+
+        fetchData();
+    }, [page]);
 
     return (
-        <div className="mx-auto w-[80%] grid grid-cols-4 gap-5 justify-items-center">
-            {list.map((el) => 
-                (<Product
-                    key={`product-${el.id}`}
-                    name={el.title}
-                    description={el.description}
-                    price={el.price}
-                    discount={el.discountPercentage}
-                    imageUrl={el.thumbnail}
-                />)
-            )}
-        </div>
-    )
+            <InfiniteScroll 
+                dataLength={list.length}
+                next={fetchData}
+                hasMore={list.length < dataLength}
+                loader={<div/>}
+                scrollThreshold="100px"
+                hasChildren={false}
+                >
+                    <div
+                    className="mx-auto w-[80%] grid grid-cols-4 gap-5 justify-items-center"
+                    >
+                        {list.map((el) => 
+                                (<Product
+                                 key={`product-${el.id}`}
+                                 name={el.title}
+                                 description={el.description}
+                                 price={el.price}
+                                 discount={el.discountPercentage}
+                                 imageUrl={el.thumbnail}
+                                 />)
+                                )}
+                    </div>
+        </InfiniteScroll>
+        )
 };
 
