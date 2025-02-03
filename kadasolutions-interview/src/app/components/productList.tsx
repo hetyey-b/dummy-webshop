@@ -53,6 +53,7 @@ export default function ProductList() {
                                  price={el.price}
                                  discount={el.discountPercentage}
                                  imageUrl={el.thumbnail}
+                                 redirectUrl={`/product/${el.id}`}
                                  />)
                                 )}
                     </div>

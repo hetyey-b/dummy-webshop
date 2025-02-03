@@ -5,6 +5,9 @@
 :root {
   --background: #F5F5F5;
   --foreground: #323232;
+  --light-gray: #d9d9d9;
+  --purple: #6100ff;
+  --card-bg-light-gray: #dbdbdb;
 }
 
 /*
@@ -19,5 +22,5 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'General Sans', sans-serif;
 }

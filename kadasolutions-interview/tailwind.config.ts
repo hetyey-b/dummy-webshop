@@ -11,6 +11,9 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        lightGray: "var(--light-gray)",
+        purple: "var(--purple)",
+        cardBgLightGray: "var(--card-bg-light-gray)",
       },
     },
   },
