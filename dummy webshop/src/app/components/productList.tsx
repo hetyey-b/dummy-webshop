@@ -39,7 +39,6 @@ export default function ProductList() {
                 next={fetchData}
                 hasMore={list.length < dataLength}
                 loader={<div/>}
-                scrollThreshold="100px"
                 hasChildren={false}
                 >
                     <div
